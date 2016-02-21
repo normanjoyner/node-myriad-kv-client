@@ -61,7 +61,7 @@ myriad_kv_client.get("mykey", function(err, value){
 ### Set
 Set key and value
 ```javascript
-myriad_kv_client.set("mykey", "myvalue", function(err){
+myriad_kv_client.set({ key: "mykey", value: "myvalue" }, function(err){
     if(err)
         throw err;
 });
