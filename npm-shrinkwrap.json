@@ -1,0 +1,11 @@
+{
+  "name": "node-myriad-kv-client",
+  "version": "0.0.0",
+  "dependencies": {
+    "lodash": {
+      "version": "4.5.0",
+      "from": "lodash@latest",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.5.0.tgz"
+    }
+  }
+}
