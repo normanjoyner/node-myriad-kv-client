@@ -29,7 +29,7 @@ module.exports = function(client){
             if(_.isEmpty(data))
                 return fn();
 
-            return fn(null, data);
+            return fn(null, data.split(","));
         });
     }
 }
