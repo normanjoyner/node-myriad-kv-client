@@ -1,20 +1,23 @@
+var net = require("net");
 var _ = require("lodash");
 var errors = require([__dirname, "..", "lib", "errors"].join("/"));
 var constants = require([__dirname, "..", "lib", "constants"].join("/"));
 
 module.exports = function(client){
     return function(fn){
-        client.socket.connect(client.options.port, client.options.host, function(){
-            client.socket.write("FLUSH");
-            client.socket.write(constants.message.DELIMITER);
+        var socket = new net.Socket();
+
+        socket.connect(client.options.port, client.options.host, function(){
+            socket.write("FLUSH");
+            socket.write(constants.message.DELIMITER);
         });
 
-        client.socket.on("error", function(err){
+        socket.on("error", function(err){
             return fn(err);
         });
 
-        client.socket.on("data", function(data){
-            client.socket.destroy();
+        socket.on("data", function(data){
+            socket.destroy();
 
             data = data.toString().split(constants.message.DELIMITER)[0];
 
