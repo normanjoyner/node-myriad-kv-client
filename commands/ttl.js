@@ -1,9 +1,12 @@
+var net = require("net");
 var _ = require("lodash");
 var errors = require([__dirname, "..", "lib", "errors"].join("/"));
 var constants = require([__dirname, "..", "lib", "constants"].join("/"));
 
 module.exports = function(client){
     return function(key, ttl, fn){
+        var socket = new net.Socket();
+
         if(_.isFunction(key)){
             fn = key;
             key = undefined;
@@ -17,21 +20,21 @@ module.exports = function(client){
         if(_.isUndefined(key))
             return fn(new errors.EINSUFFINFO());
 
-        client.socket.connect(client.options.port, client.options.host, function(){
+        socket.connect(client.options.port, client.options.host, function(){
             if(ttl)
-                client.socket.write(["TTL", key, ttl].join(" "));
+                socket.write(["TTL", key, ttl].join(" "));
             else
-                client.socket.write(["TTL", key].join(" "));
+                socket.write(["TTL", key].join(" "));
 
-            client.socket.write(constants.message.DELIMITER);
+            socket.write(constants.message.DELIMITER);
         });
 
-        client.socket.on("error", function(err){
+        socket.on("error", function(err){
             return fn(err);
         });
 
-        client.socket.on("data", function(data){
-            client.socket.destroy();
+        socket.on("data", function(data){
+            socket.destroy();
 
             data = data.toString().split(constants.message.DELIMITER)[0];
 
