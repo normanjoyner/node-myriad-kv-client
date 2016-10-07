@@ -29,5 +29,8 @@
   "devDependencies": {
     "eslint": "^3.4.0",
     "mocha": "^3.0.2"
+  },
+  "bin": {
+    "myriad-kv-client": "./application.js"
   }
 }
