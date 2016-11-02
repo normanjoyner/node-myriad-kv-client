@@ -20,13 +20,21 @@ module.exports = function(client) {
         });
 
         socket.on('error', (err) => {
+            socket.destroy();
             return fn(err);
         });
 
-        socket.on('data', (data) => {
-            socket.destroy();
+        let buffer = '';
 
-            data = data.toString().split(constants.message.DELIMITER)[0];
+        socket.on('data', (data) => {
+            buffer += data.toString();
+
+            if (buffer.indexOf(constants.message.DELIMITER) === -1) {
+                return;
+            }
+
+            socket.end();
+            data = buffer.split(constants.message.DELIMITER)[0];
 
             if(_.isEmpty(data)) {
                 return fn();
