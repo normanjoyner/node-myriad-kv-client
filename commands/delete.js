@@ -38,7 +38,7 @@ module.exports = function(client) {
                 return;
             }
 
-            client.end();
+            socket.end();
             data = buffer.split(constants.message.DELIMITER)[0];
 
             if(_.isEmpty(data)) {
