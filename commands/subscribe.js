@@ -23,6 +23,10 @@ class Subscriber extends EventEmitter {
             socket.write(constants.message.DELIMITER);
         });
 
+        socket.on('close', () => {
+            this.emit('close');
+        });
+
         socket.on('error', (err) => {
             socket.destroy();
             this.emit('error', JSON.stringify({
