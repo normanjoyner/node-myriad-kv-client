@@ -8,5 +8,6 @@ module.exports = {
     set: require('./set'),
     snapshot: require('./snapshot'),
     stat: require('./stat'),
+    subscribe: require('./subscribe'),
     ttl: require('./ttl')
 };
