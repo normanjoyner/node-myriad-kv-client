@@ -51,7 +51,7 @@ class Subscriber extends EventEmitter {
                     if(JSON.parse(message).error) {
                         return this.emit('error', message);
                     } else {
-                        return this.emit('message', message);
+                        return this.emit('message', JSON.parse(message));
                     }
                 } catch(err) {
                     return this.emit('message', message);
